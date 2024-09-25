@@ -1,3 +1,40 @@
+function linkSlidersToFields() {
+    const sliderMappings = [
+        { sliderId: 'c-range', fieldId: 'c', handler: handleCmykInput },
+        { sliderId: 'm-range', fieldId: 'm', handler: handleCmykInput },
+        { sliderId: 'y-range', fieldId: 'y', handler: handleCmykInput },
+        { sliderId: 'k-range', fieldId: 'k', handler: handleCmykInput },
+
+        { sliderId: 'h-range', fieldId: 'h', handler: handleHlsInput },
+        { sliderId: 'l-range', fieldId: 'l', handler: handleHlsInput },
+        { sliderId: 's-range', fieldId: 's', handler: handleHlsInput },
+
+        { sliderId: 'x-range', fieldId: 'x', handler: handleXyzInput },
+        { sliderId: 'y-range', fieldId: 'y-xyz', handler: handleXyzInput },
+        { sliderId: 'z-range', fieldId: 'z', handler: handleXyzInput }
+    ];
+
+    sliderMappings.forEach(mapping => {
+        const slider = document.getElementById(mapping.sliderId);
+        const field = document.getElementById(mapping.fieldId);
+
+        // Связать ползунок с полем ввода
+        slider.addEventListener('input', function () {
+            field.value = this.value;
+            mapping.handler(); // Вызов соответствующей функции
+        });
+
+        // Связать поле ввода с ползунком
+        field.addEventListener('input', function () {
+            slider.value = this.value;
+            mapping.handler(); // Вызов соответствующей функции
+        });
+    });
+}
+
+// Вызов функции для синхронизации ползунков и текстовых полей
+linkSlidersToFields();
+
 function isValueValid(value, min, max) {
     return value >= min && value <= max;
 }
